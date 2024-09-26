@@ -14,7 +14,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <body className="container m-auto grid min-h-screen grid-rows-[auto,1fr,auto] bg-background px-4 font-sans antialiased">
         <header className="text-xl font-bold leading-[4rem]">
-          <Link href="/">ProyectoReviews</Link>
+          <div className="mt-4">
+            <Link className=" rounded-xl border-2 border-white px-12 py-4" href="/">
+              LatosProyect
+            </Link>
+          </div>
         </header>
         <main className="py-8">{children}</main>
         <footer className="text-center leading-[4rem] opacity-70">
