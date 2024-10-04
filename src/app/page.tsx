@@ -3,9 +3,12 @@
 import {mock} from "node:test";
 
 import React, {useState} from "react";
+import {toast} from "sonner";
 
 import Mock from "../components/mock_data_sistema_resenas.json";
 
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {Button} from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,26 +17,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 export default function HomePage() {
   const [stateLike, setLike] = useState(false);
   const [stateDislike, setDislike] = useState(false);
 
   const handleLike = () => {
-    if (stateDislike) {
-      setDislike(false);
-    }
     setLike(!stateLike);
-    console.log(stateLike);
+    stateLike ? toast("You're liked this product") : "";
+    stateDislike ? setDislike(false) : "";
   };
   const handleDislike = () => {
-    if (stateLike) {
-      setLike(false);
-    }
     setDislike(!stateDislike);
-    console.log(stateDislike);
+    stateDislike ? toast("You're disliked this product") : "";
+
+    stateLike ? setLike(false) : "";
   };
 
   interface Reviews {
@@ -77,7 +75,7 @@ export default function HomePage() {
               <img alt="imagen no encontrada" className="max-w-72" src={productos.img} />
             </CardContent>
             <CardFooter className="flex justify-around">
-              <Button className="ml-10 bg-white px-10 py-3 text-black" onClick={handleDislike}>
+              <Button className="ml-10 bg-white px-10 py-3 text-black" onClick={handleLike}>
                 Like
               </Button>
               <Button className="mr-10 bg-white px-10 py-3 text-black" onClick={handleDislike}>
@@ -85,9 +83,7 @@ export default function HomePage() {
               </Button>
             </CardFooter>
             <div className=" flex justify-center">
-              <Button className=" bg-white px-10 py-3 text-black" onClick={handleDislike}>
-                Comments
-              </Button>
+              <Button className=" bg-white px-10 py-3 text-black">Comments</Button>
             </div>
           </Card>
         ))}
