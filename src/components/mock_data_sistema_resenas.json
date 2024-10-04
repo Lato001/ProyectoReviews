@@ -5,6 +5,7 @@
             "name": "Auriculares Bluetooth",
             "description": "Auriculares inal\u00e1mbricos con cancelaci\u00f3n de ruido.",
             "price": 59.99,
+            "img": "https://row.hyperx.com/cdn/shop/products/hyperx_cloud_20flight_3_extended.jpg?v=1662435222",
             "reviews": [
                 {
                     "id": "r1",
@@ -28,6 +29,7 @@
             "id": "p2",
             "name": "Smartphone Android",
             "description": "Tel\u00e9fono m\u00f3vil con pantalla de 6.5 pulgadas y 128GB de almacenamiento.",
+            "img": "https://http2.mlstatic.com/D_921195-MLA74420606310_022024-C.jpg",
             "price": 299.99,
             "reviews": [
                 {
