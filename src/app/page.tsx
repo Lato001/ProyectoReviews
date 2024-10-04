@@ -17,6 +17,45 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+
+interface Reviews {
+  id: string;
+  product: string;
+  userID: string;
+  content: string;
+  likes: number;
+  dislikes: number;
+}
+interface Products {
+  id: string;
+  name: string;
+  description: string;
+  img: string;
+  price: number;
+  reviews: Reviews[];
+}
+
+interface Users {
+  id: string;
+  name: string;
+  email: string;
+  img: string;
+}
+
+const products: Products[] = Mock.products;
+const reviews = products.map((productos) => productos.reviews);
+const users: Users[] = Mock.users;
 
 export default function HomePage() {
   const [stateLike, setLike] = useState(false);
@@ -24,44 +63,16 @@ export default function HomePage() {
 
   const handleLike = () => {
     setLike(!stateLike);
-    stateLike ? toast("You're Liked this product!") : toast("Your like was removed ");
+    stateLike ? toast("Your Like was removed") : toast("You're Liked this product!");
     stateDislike ? setDislike(false) : "";
   };
 
   const handleDislike = () => {
     setDislike(!stateDislike);
-    stateDislike ? toast("You're Disliked this product") : toast("Your dislike was removed ");
+    stateDislike ? toast("Your dislike was removed") : toast(" You're Disliked this product");
 
     stateLike ? setLike(false) : "";
   };
-
-  interface Reviews {
-    id: string;
-    product: string;
-    userID: string;
-    content: string;
-    likes: number;
-    dislikes: number;
-  }
-  interface Products {
-    id: string;
-    name: string;
-    description: string;
-    img: string;
-    price: number;
-    reviews: Reviews[];
-  }
-
-  interface Users {
-    id: string;
-    name: string;
-    email: string;
-    img: string;
-  }
-
-  const products: Products[] = Mock.products;
-  const reviews = products.map((productos) => productos.reviews);
-  const users: Users[] = Mock.users;
 
   return (
     <div className="flex justify-center">
@@ -92,9 +103,47 @@ export default function HomePage() {
               </Button>
             </CardFooter>
             <div className=" flex justify-center">
-              <Button className=" bg-white px-10 py-3 text-black" variant="outline">
-                Comments
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="bg-white text-black" variant="outline">
+                    Comments
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Send review</DialogTitle>
+                    <DialogDescription>
+                      <p>Write your opinion about this product.</p>
+                      <p>Keep in mind that it will be public. Your opinion can make a difference</p>
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 " />
+                  {productos.reviews.map((rw) => {
+                    const user = users.find((usr) => usr.id === rw.userID);
+
+                    return (
+                      <Card key={rw.id}>
+                        <CardHeader>
+                          <div className="flex ">
+                            <Avatar>
+                              <AvatarImage src={user?.img} />
+                              <AvatarFallback>{user?.name}</AvatarFallback>
+                            </Avatar>
+                            <Label className="ml-4 mt-2.5" htmlFor="username">
+                              {user?.name}
+                            </Label>
+                          </div>
+                        </CardHeader>
+                        <CardContent>{rw.content}</CardContent>
+                      </Card>
+                    );
+                  })}
+
+                  <DialogFooter>
+                    <Button type="submit">Send</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </Card>
         ))}
