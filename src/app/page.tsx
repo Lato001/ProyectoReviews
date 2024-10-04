@@ -24,12 +24,13 @@ export default function HomePage() {
 
   const handleLike = () => {
     setLike(!stateLike);
-    stateLike ? toast("You're liked this product") : "";
+    stateLike ? toast("You're Liked this product!") : toast("Your like was removed ");
     stateDislike ? setDislike(false) : "";
   };
+
   const handleDislike = () => {
     setDislike(!stateDislike);
-    stateDislike ? toast("You're disliked this product") : "";
+    stateDislike ? toast("You're Disliked this product") : toast("Your dislike was removed ");
 
     stateLike ? setLike(false) : "";
   };
@@ -75,15 +76,25 @@ export default function HomePage() {
               <img alt="imagen no encontrada" className="max-w-72" src={productos.img} />
             </CardContent>
             <CardFooter className="flex justify-around">
-              <Button className="ml-10 bg-white px-10 py-3 text-black" onClick={handleLike}>
+              <Button
+                className="ml-10 bg-white px-10 py-3 text-black"
+                variant="outline"
+                onClick={handleLike}
+              >
                 Like
               </Button>
-              <Button className="mr-10 bg-white px-10 py-3 text-black" onClick={handleDislike}>
+              <Button
+                className="mr-10 bg-white px-10 py-3 text-black"
+                variant="outline"
+                onClick={handleDislike}
+              >
                 Dislike
               </Button>
             </CardFooter>
             <div className=" flex justify-center">
-              <Button className=" bg-white px-10 py-3 text-black">Comments</Button>
+              <Button className=" bg-white px-10 py-3 text-black" variant="outline">
+                Comments
+              </Button>
             </div>
           </Card>
         ))}
