@@ -31,8 +31,8 @@ import {Label} from "@/components/ui/label";
 
 interface Reviews {
   id: string;
-  product: string;
-  userID: string;
+  productId: string;
+  userId: string;
   content: string;
   likes: number;
   dislikes: number;
@@ -119,7 +119,7 @@ export default function HomePage() {
                   </DialogHeader>
                   <div className="grid gap-4 " />
                   {productos.reviews.map((rw) => {
-                    const user = users.find((usr) => usr.id === rw.userID);
+                    const user = users.find((usr) => usr.id === rw.userId);
 
                     return (
                       <Card key={rw.id}>
