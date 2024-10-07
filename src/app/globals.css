@@ -33,6 +33,10 @@
     --ring: 240 10% 3.9%;
 
     --radius: 0.5rem;
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   @media (prefers-color-scheme: dark) {
