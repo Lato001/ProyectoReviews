@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-      <body className="container m-auto grid min-h-screen grid-rows-[auto,1fr,auto] bg-background px-4 font-sans antialiased">
+      <body className="no-scrollbar container m-auto grid min-h-screen grid-rows-[auto,1fr,auto] overflow-y-scroll bg-background px-4 font-sans antialiased">
         <header className="text-xl font-bold leading-[4rem]">
           <div className="mt-4">
             <Link className=" rounded-xl border-2 border-white px-12 py-4" href="/">

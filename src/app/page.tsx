@@ -1,8 +1,6 @@
 "use client";
 
-import {mock} from "node:test";
-
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import {toast} from "sonner";
 
 import Mock from "../components/mock_data_sistema_resenas.json";
@@ -28,6 +26,7 @@ import {
 } from "@/components/ui/dialog";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
+import {Textarea} from "@/components/ui/textarea";
 
 interface Reviews {
   id: string;
@@ -36,6 +35,7 @@ interface Reviews {
   content: string;
   likes: number;
   dislikes: number;
+  isLiked: boolean;
 }
 interface Products {
   id: string;
@@ -43,6 +43,7 @@ interface Products {
   description: string;
   img: string;
   price: number;
+
   reviews: Reviews[];
 }
 
@@ -58,21 +59,28 @@ const reviews = products.map((productos) => productos.reviews);
 const users: Users[] = Mock.users;
 
 export default function HomePage() {
-  const [stateLike, setLike] = useState(false);
-  const [stateDislike, setDislike] = useState(false);
+  const [stateLike, setLike] = useState<boolean | null>(null);
+  const [count, setCount] = useState(0);
 
   const handleLike = () => {
-    setLike(!stateLike);
-    stateLike ? toast("Your Like was removed") : toast("You're Liked this product!");
-    stateDislike ? setDislike(false) : "";
+    !stateLike ? setLike(true) : setLike(null);
+    !stateLike ? toast("You're Liked this product!") : toast("your Like was removed");
   };
-
   const handleDislike = () => {
-    setDislike(!stateDislike);
-    stateDislike ? toast("Your dislike was removed") : toast(" You're Disliked this product");
-
-    stateLike ? setLike(false) : "";
+    !(stateLike === false) ? setLike(false) : setLike(null);
+    !(stateLike === false)
+      ? toast("You disliked this product!")
+      : toast("Your Dislike was removed");
   };
+
+  const handleSend = () => {};
+  /* const alertMessageSended = validar()
+    ? "Your message has sent"
+    : "your message is void, please try again";
+    const handleSendMessage = () => {
+      toast(alertMessageSended);
+    };
+  */
 
   return (
     <div className="flex justify-center">
@@ -81,48 +89,44 @@ export default function HomePage() {
           <Card key={productos.id} className="mb-8 pb-8">
             <CardHeader>
               <CardTitle>{productos.name}</CardTitle>
-              <CardDescription>{productos.description}</CardDescription>
+              <CardDescription className="flex-wrap">
+                <p>{productos.description}</p>
+                <p className="bold mt-2 text-white">${productos.price}</p>
+              </CardDescription>
             </CardHeader>
             <CardContent className=" flex justify-center">
-              <img alt="imagen no encontrada" className="max-w-72" src={productos.img} />
+              <img
+                alt="imagen no encontrada"
+                className="max-w-72 rounded-3xl"
+                src={productos.img}
+              />
             </CardContent>
-            <CardFooter className="flex justify-around">
-              <Button
-                className="ml-10 bg-white px-10 py-3 text-black"
-                variant="outline"
-                onClick={handleLike}
-              >
-                Like
-              </Button>
-              <Button
-                className="mr-10 bg-white px-10 py-3 text-black"
-                variant="outline"
-                onClick={handleDislike}
-              >
-                Dislike
-              </Button>
-            </CardFooter>
+
             <div className=" flex justify-center">
               <Dialog>
                 <DialogTrigger asChild>
                   <Button className="bg-white text-black" variant="outline">
-                    Comments
+                    Reviews ({productos.reviews.length})
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="border-2 border-solid border-white sm:max-w-[500px]">
                   <DialogHeader>
                     <DialogTitle>Send review</DialogTitle>
                     <DialogDescription>
                       <p>Write your opinion about this product.</p>
-                      <p>Keep in mind that it will be public. Your opinion can make a difference</p>
+                      <p>
+                        Keep in mind that it will be public, your opinion can be make the
+                        difference.
+                      </p>
                     </DialogDescription>
+                    <DialogFooter />
                   </DialogHeader>
-                  <div className="grid gap-4 " />
+                  <div />
                   {productos.reviews.map((rw) => {
                     const user = users.find((usr) => usr.id === rw.userId);
 
                     return (
-                      <Card key={rw.id}>
+                      <Card key={rw.id} className="border-2 border-solid border-white">
                         <CardHeader>
                           <div className="flex ">
                             <Avatar>
@@ -135,12 +139,39 @@ export default function HomePage() {
                           </div>
                         </CardHeader>
                         <CardContent>{rw.content}</CardContent>
+                        <CardFooter className=" flex justify-end p-0">
+                          <div className="float-end flex w-full justify-between pb-4">
+                            <Button
+                              key={productos.id}
+                              className={`ml-10  px-10 py-3 text-black ${stateLike ? " bg-green-500 duration-75" : "bg-white"} hover:bg-green-200`}
+                              id=""
+                              onClick={handleLike}
+                            >
+                              Likes ({rw.likes})
+                            </Button>
+                            <Button
+                              key={productos.id}
+                              className={`mr-10  px-10 py-3 text-black ${stateLike === false ? " bg-red-500 duration-75" : "bg-white"} hover:bg-red-200`}
+                              id=""
+                              onClick={handleDislike}
+                            >
+                              Dislike ({rw.dislikes})
+                            </Button>
+                          </div>
+                        </CardFooter>
                       </Card>
                     );
                   })}
 
-                  <DialogFooter>
-                    <Button type="submit">Send</Button>
+                  <DialogFooter className="items-center">
+                    <Textarea
+                      className=" no-scrollbar ml-1 max-h-24 w-full overflow-y-scroll p-4 text-base text-white "
+                      id="textarea"
+                      placeholder="Write a comment!"
+                    />
+                    <Button className="ml-4 " type="submit" onClick={handleSend}>
+                      Send
+                    </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

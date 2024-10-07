@@ -13,15 +13,19 @@
                     "userId": "u1",
                     "content": "Los mejores auriculares que he probado.",
                     "likes": 10,
-                    "dislikes": 1
-                },
+                    "dislikes": 1,
+                    "isLiked":false
+
+                }
+                ,
                 {
                     "id": "r2",
                     "productId": "p1",
                     "userId": "u2",
                     "content": "Buena calidad de sonido pero la bater\u00eda no dura mucho.",
                     "likes": 5,
-                    "dislikes": 2
+                    "dislikes": 2,
+                    "isLiked":false
                 }
             ]
         },
@@ -29,8 +33,9 @@
             "id": "p2",
             "name": "Smartphone Android",
             "description": "Tel\u00e9fono m\u00f3vil con pantalla de 6.5 pulgadas y 128GB de almacenamiento.",
-            "img": "https://http2.mlstatic.com/D_921195-MLA74420606310_022024-C.jpg",
             "price": 299.99,
+            "img": "https://http2.mlstatic.com/D_921195-MLA74420606310_022024-C.jpg",
+
             "reviews": [
                 {
                     "id": "r3",
@@ -38,7 +43,8 @@
                     "userId": "u3",
                     "content": "Muy buen tel\u00e9fono por el precio.",
                     "likes": 20,
-                    "dislikes": 3
+                    "dislikes": 3,
+                    "isLiked":false
                 }
             ]
         }
